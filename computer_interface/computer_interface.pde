@@ -16,7 +16,11 @@ void draw() {
   text("Arduinochet Interface", 0, 50);
   drawHCW();
   drawHeading();
-  drawButton();
+  drawButtons();
+}
+
+void drawButtons() {
+  
 }
 
 void drawHCW() {
@@ -72,6 +76,15 @@ void drawHeading() {
   }
   translate(45, 245);
   rect(0, 25, 60, 10);
+  popMatrix();
+  pushMatrix();
+  translate(400, 260);
+  rotate(currentTrebuchetHeading * PI/180);
+  fill(255);
+  stroke(0);
+  ellipse(0, 0, 10, 10);
+  stroke(0);
+  line(0, 0, 0, -5);
   popMatrix();
 }
 
