@@ -18,6 +18,7 @@ boolean valuesDirty = false;
 boolean overLaunchButton = false;
 boolean launched = false;
 int currentBlockOpacity = 0;
+int heldDownStart = -1;
 
 void setup() {
   size(640, 480);
@@ -133,6 +134,22 @@ void drawHCW() {
   noStroke();
   rect(25, 0, 10, 60);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHCWPlus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 15 == 0) {
+          hingeCWDistance++;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
   pushMatrix();
   if (overHCWMinus) {
@@ -142,6 +159,22 @@ void drawHCW() {
   }
   translate(45, 120);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHCWMinus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 15 == 0) {
+          hingeCWDistance--;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
 }
 
@@ -161,6 +194,22 @@ void drawHeading() {
   noStroke();
   rect(25, 0, 10, 60);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHeadingPlus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 5 == 0) {
+          currentTrebuchetHeading++;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
   pushMatrix();
   if (overHeadingMinus) {
@@ -170,6 +219,22 @@ void drawHeading() {
   }
   translate(45, 245);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHeadingMinus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 5 == 0) {
+          currentTrebuchetHeading--;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
   pushMatrix();
   translate(400, 260);
