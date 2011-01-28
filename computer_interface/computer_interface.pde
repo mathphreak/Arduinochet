@@ -1,7 +1,7 @@
 // This code is in the public domain.
 
 final boolean DRAW_PUSH_BUTTON = true;
-final boolean PUSH_ON_CHANGE = false;
+boolean PUSH_ON_CHANGE = false;
 
 int hingeCWDistance = 20; // inches
 int currentTrebuchetHeading = 0; // degrees
@@ -18,6 +18,7 @@ boolean valuesDirty = false;
 boolean overLaunchButton = false;
 boolean launched = false;
 int currentBlockOpacity = 0;
+int heldDownStart = -1;
 
 void setup() {
   size(640, 480);
@@ -40,7 +41,9 @@ void drawButtons() {
   noStroke();
   fill(100);
   rect(25, 350, 200, 100);
-  if (overPushSettings && valuesDirty) {
+  if (PUSH_ON_CHANGE) {
+    fill(150);
+  } else if (overPushSettings && valuesDirty) {
     fill(255, 200, 100);
   } else if (valuesDirty) {
     fill(255, 0, 0);
@@ -51,6 +54,19 @@ void drawButtons() {
   }
   textSize(20);
   text("Push Config", 50, 400);
+  fill(175);
+  rect(30, 420, 190, 25);
+  if (PUSH_ON_CHANGE) {
+    fill(255);
+    text("Live", 35, 440);
+    fill(200);
+    text("Manual", 150, 440);
+  } else {
+    fill(200);
+    text("Live", 35, 440);
+    fill(255);
+    text("Manual", 150, 440);
+  }
   // dark rectangle
   fill(0, currentBlockOpacity);
   rect(0, 0, width, height);
@@ -118,6 +134,22 @@ void drawHCW() {
   noStroke();
   rect(25, 0, 10, 60);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHCWPlus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 15 == 0) {
+          hingeCWDistance++;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
   pushMatrix();
   if (overHCWMinus) {
@@ -127,6 +159,22 @@ void drawHCW() {
   }
   translate(45, 120);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHCWMinus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 15 == 0) {
+          hingeCWDistance--;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
 }
 
@@ -146,6 +194,22 @@ void drawHeading() {
   noStroke();
   rect(25, 0, 10, 60);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHeadingPlus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 5 == 0) {
+          currentTrebuchetHeading++;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
   pushMatrix();
   if (overHeadingMinus) {
@@ -155,6 +219,22 @@ void drawHeading() {
   }
   translate(45, 245);
   rect(0, 25, 60, 10);
+  if (mousePressed && overHeadingMinus) {
+    if (heldDownStart == -1) {
+      heldDownStart = millis();
+    } else {
+      if (millis() - heldDownStart > 500) {
+        if (frameCount % 5 == 0) {
+          currentTrebuchetHeading--;
+          if (PUSH_ON_CHANGE) {
+            pushConfig();
+          }
+        }
+      }
+    }
+  } else if (!mousePressed) {
+    heldDownStart = -1;
+  }
   popMatrix();
   pushMatrix();
   translate(400, 260);
@@ -245,7 +325,11 @@ void mouseClicked() {
       armSwitchDragStartX = -1;
     }
   } else if (overPushSettings) {
-    pushConfig();
+    if (mouseButton == LEFT) {
+      pushConfig();
+    } else if (mouseButton == RIGHT) {
+      PUSH_ON_CHANGE = !PUSH_ON_CHANGE;
+    }
   } else if (overLaunchButton && currentArmSwitchX == 400) {
     fire();
   } else {
@@ -259,4 +343,5 @@ void mouseClicked() {
 void pushConfig() {
   valuesDirty = false;
   // send configuration data over serial here
+  println("Config pushed.");
 }
