@@ -20,7 +20,7 @@ public class computer_interface extends PApplet {
 // This code is in the public domain.
 
 final boolean DRAW_PUSH_BUTTON = true;
-final boolean PUSH_ON_CHANGE = false;
+boolean PUSH_ON_CHANGE = false;
 
 int hingeCWDistance = 20; // inches
 int currentTrebuchetHeading = 0; // degrees
@@ -59,7 +59,9 @@ public void drawButtons() {
   noStroke();
   fill(100);
   rect(25, 350, 200, 100);
-  if (overPushSettings && valuesDirty) {
+  if (PUSH_ON_CHANGE) {
+    fill(150);
+  } else if (overPushSettings && valuesDirty) {
     fill(255, 200, 100);
   } else if (valuesDirty) {
     fill(255, 0, 0);
@@ -70,6 +72,19 @@ public void drawButtons() {
   }
   textSize(20);
   text("Push Config", 50, 400);
+  fill(175);
+  rect(30, 420, 190, 25);
+  if (PUSH_ON_CHANGE) {
+    fill(255);
+    text("Live", 35, 440);
+    fill(200);
+    text("Manual", 150, 440);
+  } else {
+    fill(200);
+    text("Live", 35, 440);
+    fill(255);
+    text("Manual", 150, 440);
+  }
   // dark rectangle
   fill(0, currentBlockOpacity);
   rect(0, 0, width, height);
@@ -264,7 +279,11 @@ public void mouseClicked() {
       armSwitchDragStartX = -1;
     }
   } else if (overPushSettings) {
-    pushConfig();
+    if (mouseButton == LEFT) {
+      pushConfig();
+    } else if (mouseButton == RIGHT) {
+      PUSH_ON_CHANGE = !PUSH_ON_CHANGE;
+    }
   } else if (overLaunchButton && currentArmSwitchX == 400) {
     fire();
   } else {
@@ -278,6 +297,7 @@ public void mouseClicked() {
 public void pushConfig() {
   valuesDirty = false;
   // send configuration data over serial here
+  println("Config pushed.");
 }
   static public void main(String args[]) {
     PApplet.main(new String[] { "--bgcolor=#F0F0F0", "computer_interface" });
