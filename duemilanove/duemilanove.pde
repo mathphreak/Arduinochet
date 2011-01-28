@@ -1,6 +1,7 @@
 // Duemilanove code.
 
 void setup() {
+  Serial.begin(9600);
   // TODO get work done.
 }
 
