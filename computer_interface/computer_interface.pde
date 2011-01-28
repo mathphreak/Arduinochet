@@ -246,7 +246,7 @@ void mouseClicked() {
     }
   } else if (overPushSettings) {
     pushConfig();
-  } else if (overLaunchButton) {
+  } else if (overLaunchButton && currentArmSwitchX == 400) {
     fire();
   } else {
     println(mouseX + "," + mouseY);
