@@ -12,20 +12,20 @@ class Mega {
   void sendConfig(int distance, int heading, int armSwitch) {
     if (distance != oldDistance) {
       oldDistance = distance;
-      port.write("d" + oldDistance);
+      port.write("d" + oldDistance + " ");
     }
     if (heading != oldHeading) {
       oldHeading = heading;
-      port.write("h" + oldHeading);
+      port.write("h" + oldHeading + " ");
     }
     boolean newArmed = (armSwitch == 400);
     if (newArmed != armed) {
       armed = newArmed;
-      port.write(newArmed ? "a" : "u");
+      port.write(newArmed ? "a " : "u ");
     }
   }
   
   void fire() {
-    port.write("f");
+    port.write("f ");
   }
 }
