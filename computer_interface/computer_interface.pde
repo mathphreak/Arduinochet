@@ -19,6 +19,7 @@ boolean overLaunchButton = false;
 boolean launched = false;
 int currentBlockOpacity = 0;
 int heldDownStart = -1;
+int launchStart = -1;
 
 void setup() {
   size(640, 480);
@@ -71,13 +72,37 @@ void drawButtons() {
   fill(0, currentBlockOpacity);
   rect(0, 0, width, height);
   if (currentArmSwitchX == 400) {
-    if (currentBlockOpacity < 200) currentBlockOpacity++;
+    if (currentBlockOpacity < 200) currentBlockOpacity += 2;
   } else {
-    if (currentBlockOpacity > 0) currentBlockOpacity--;
+    if (currentBlockOpacity > 0) currentBlockOpacity -= 2;
   }
   // LAUNCH
   fill(100);
   rect(250, 350, 365, 100);
+  // countdown
+  if (launchStart != -1) {
+    fill(0, currentBlockOpacity);
+    rect(250, 350, 365, 100);
+    textSize(75);
+    if (millis() - launchStart < 1000) {
+      fill(255);
+      text("3", 275, 428);
+    } else if (millis() - launchStart < 2000) {
+      fill(255);
+      text("2", 275, 428);
+    } else if (millis() - launchStart < 3000) {
+      fill(255);
+      text("1", 275, 428);
+    } else if (millis() - launchStart < 4000) {
+      fill(255);
+      text("LAUNCH", 275, 428);
+    } else {
+      fire();
+      launchStart = -1;
+      currentArmSwitchX = 300;
+    }
+    return;
+  }
   // launch slider
   stroke(255);
   line(300, 400, 400, 400);
@@ -331,7 +356,7 @@ void mouseClicked() {
       PUSH_ON_CHANGE = !PUSH_ON_CHANGE;
     }
   } else if (overLaunchButton && currentArmSwitchX == 400) {
-    fire();
+    launchStart = millis();
   } else {
     println(mouseX + "," + mouseY);
   }
