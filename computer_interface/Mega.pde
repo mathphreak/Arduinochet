@@ -6,7 +6,7 @@ class Mega {
   
   void init() {
     String portName = Serial.list()[0];
-    myPort = new Serial(this, portName, 9600);
+    port = new Serial(computer_interface.this, portName, 9600);
   }
   
   void sendConfig(int distance, int heading, int armSwitch) {
