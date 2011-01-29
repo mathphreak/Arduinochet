@@ -99,7 +99,7 @@ void drawButtons() {
       fill(255);
       text("1", 275, 428);
     } else if (millis() - launchStart < 4000) {
-      fill(255);
+      fill(100, 100, 255);
       text("LAUNCH", 275, 428);
     } else {
       fire();
