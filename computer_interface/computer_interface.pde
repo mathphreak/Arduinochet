@@ -1,3 +1,5 @@
+import processing.serial.*;
+
 // This code is in the public domain.
 
 final boolean DRAW_PUSH_BUTTON = true;
@@ -20,8 +22,11 @@ boolean launched = false;
 int currentBlockOpacity = 0;
 int heldDownStart = -1;
 int launchStart = -1;
+Mega mega;
 
 void setup() {
+  mega = new Mega();
+  mega.init();
   size(640, 480);
   smooth();
   imageMode(CENTER);
@@ -323,12 +328,6 @@ void mouseMoved() {
   }
 }
 
-void fire() {
-  // tell the arduino to fire
-  launched = true;
-  link("http://upload.wikimedia.org/wikipedia/commons/8/89/Bomba_atomowa.gif");
-}
-
 void mouseClicked() {
   if (overHCWPlus) {
     hingeCWDistance++;
@@ -365,8 +364,16 @@ void mouseClicked() {
   }
 }
 
+void fire() {
+  // tell the arduino to fire
+  mega.fire();
+  launched = true;
+  link("http://upload.wikimedia.org/wikipedia/commons/8/89/Bomba_atomowa.gif");
+}
+
 void pushConfig() {
   valuesDirty = false;
   // send configuration data over serial here
+  mega.sendConfig(hingeCWDistance, currentTrebuchetHeading, currentArmSwitchX);
   println("Config pushed.");
 }
