@@ -5,7 +5,7 @@ class Mega {
   boolean armed;
   
   void init() {
-    String portName = Serial.list()[0];
+    String portName = Serial.list()[1];
     port = new Serial(computer_interface.this, portName, 9600);
   }
   

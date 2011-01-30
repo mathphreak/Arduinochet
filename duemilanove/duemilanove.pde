@@ -29,6 +29,7 @@ void loop() {
       inByte = buf[i];
       if (firstRead == 0) {
         char inChar = (char) inByte;
+        Serial.print(inChar);
         if (inChar == 'f') {
           fire();
         } else if (inChar == 'a') {
