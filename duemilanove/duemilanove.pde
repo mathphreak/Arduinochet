@@ -7,8 +7,8 @@ char firstRead = 0;
 int inValue = -1;
 
 void setup() {
-  Serial.begin(9600);   
-
+  Serial.begin(9600);  
+  pinMode(11, OUTPUT);
   // Initialise the IO and ISR
   vw_set_ptt_inverted(true);    // Required for RX Link Module
   vw_setup(2000);                   // Bits per sec
@@ -21,6 +21,9 @@ void loop() {
   uint8_t buflen = VW_MAX_MESSAGE_LEN;
   
   if (vw_get_message(buf, &buflen)) {
+    digitalWrite(11, HIGH);
+    delay(1000);
+    digitalWrite(11, LOW);
     int i;
     for (i = 0; i < buflen; i++) {
       inByte = buf[i];
