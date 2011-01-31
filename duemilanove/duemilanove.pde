@@ -21,9 +21,9 @@ void loop() {
   uint8_t buflen = VW_MAX_MESSAGE_LEN;
   
   if (vw_get_message(buf, &buflen)) {
-    digitalWrite(11, HIGH);
-    delay(1000);
-    digitalWrite(11, LOW);
+//    digitalWrite(11, HIGH);
+//    delay(1000);
+//    digitalWrite(11, LOW);
     int i;
     for (i = 0; i < buflen; i++) {
       inByte = buf[i];
