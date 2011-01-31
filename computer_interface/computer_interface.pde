@@ -365,10 +365,12 @@ void mouseClicked() {
 }
 
 void fire() {
-  // tell the arduino to fire
-  mega.fire();
   launched = true;
-//  link("http://upload.wikimedia.org/wikipedia/commons/8/89/Bomba_atomowa.gif");
+  if (online) {
+    link("http://upload.wikimedia.org/wikipedia/commons/8/89/Bomba_atomowa.gif");
+  } else {
+    mega.fire();
+  }
 }
 
 void pushConfig() {

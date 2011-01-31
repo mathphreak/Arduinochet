@@ -5,8 +5,12 @@ class Mega {
   boolean armed;
   
   void init() {
-    String portName = Serial.list()[1];
-    port = new Serial(computer_interface.this, portName, 9600);
+    println(Serial.list());
+    SerialPortChooser c = new SerialPortChooser(Serial.list());
+    while (!c.isReady()) {
+      delay(200);
+    }
+    port = new Serial(computer_interface.this, c.getPort(), 9600);
   }
   
   void sendConfig(int distance, int heading, int armSwitch) {
