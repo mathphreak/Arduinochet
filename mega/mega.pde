@@ -26,8 +26,10 @@ void loop() {
 //  digitalWrite(29, LOW);
   if (Serial.available() > 0) {
     inByte = Serial.read();
-    const char *inMsg = (const char *)inByte;
-    vw_send((uint8_t *)inMsg, 1);
+    uint8_t message[2];
+    message[0] = inByte;
+    message[1] = (uint8_t) 0;
+    vw_send(message, 1);
     vw_wait_tx();
 //    digitalWrite(29, HIGH);
   }
