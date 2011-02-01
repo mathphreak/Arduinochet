@@ -366,7 +366,7 @@ void mouseClicked() {
 
 void fire() {
   launched = true;
-  if (online) {
+  if (online || mega.demo) {
     link("http://upload.wikimedia.org/wikipedia/commons/8/89/Bomba_atomowa.gif");
   } else {
     mega.fire();
