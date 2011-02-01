@@ -5,7 +5,7 @@ import processing.serial.*;
 final boolean DRAW_PUSH_BUTTON = true;
 boolean PUSH_ON_CHANGE = false;
 
-int hingeCWDistance = 20; // inches
+int hingeCWDistance = 200; // inches * 10
 int currentTrebuchetHeading = 0; // degrees
 boolean overHCWPlus = false;
 boolean overHCWMinus = false;
@@ -153,7 +153,8 @@ void drawHCW() {
   rect(25, 100, 590, 100);
   fill(255);
   textSize(20);
-  text("Hinge-Counterweight Distance: " + hingeCWDistance + "\"", 115, 150);
+  String shown = str((int) (hingeCWDistance / 10)) + "." + str(hingeCWDistance % 10); 
+  text("Hinge-Counterweight Distance: " + shown + "\"", 115, 150);
   pushMatrix();
   translate(545, 120);
   if (overHCWPlus) {
@@ -170,7 +171,7 @@ void drawHCW() {
     } else {
       if (millis() - heldDownStart > 500) {
         if (frameCount % 15 == 0) {
-          hingeCWDistance++;
+          hingeCWDistance += 1;
           if (PUSH_ON_CHANGE) {
             pushConfig();
           }
@@ -195,7 +196,7 @@ void drawHCW() {
     } else {
       if (millis() - heldDownStart > 500) {
         if (frameCount % 15 == 0) {
-          hingeCWDistance--;
+          hingeCWDistance -= 1;
           if (PUSH_ON_CHANGE) {
             pushConfig();
           }
@@ -231,6 +232,9 @@ void drawHeading() {
       if (millis() - heldDownStart > 500) {
         if (frameCount % 5 == 0) {
           currentTrebuchetHeading++;
+          if (currentTrebuchetHeading == 360) {
+            currentTrebuchetHeading = 0;
+          }
           if (PUSH_ON_CHANGE) {
             pushConfig();
           }
@@ -256,6 +260,9 @@ void drawHeading() {
       if (millis() - heldDownStart > 500) {
         if (frameCount % 5 == 0) {
           currentTrebuchetHeading--;
+          if (currentTrebuchetHeading == -1) {
+            currentTrebuchetHeading = 359;
+          }
           if (PUSH_ON_CHANGE) {
             pushConfig();
           }
@@ -318,6 +325,7 @@ void mouseMoved() {
     currentArmSwitchX = constrain(armSwitchOriginal + (mouseX - armSwitchDragStartX), 300, 400);
     if ((currentArmSwitchX == 400 && armSwitchDragStartX != 400) || (currentArmSwitchX == 300 && armSwitchDragStartX != 300)) {
       armSwitchDragStartX = -1;
+      pushConfig();
     }
   }
   
@@ -330,16 +338,22 @@ void mouseMoved() {
 
 void mouseClicked() {
   if (overHCWPlus) {
-    hingeCWDistance++;
+    hingeCWDistance += 1;
     valuesDirty = true;
   } else if (overHCWMinus) {
-    hingeCWDistance--;
+    hingeCWDistance -= 1;
     valuesDirty = true;
   } else if (overHeadingMinus) {
     currentTrebuchetHeading--;
+    if (currentTrebuchetHeading == -1) {
+      currentTrebuchetHeading = 359;
+    }
     valuesDirty = true;
   } else if (overHeadingPlus) {
     currentTrebuchetHeading++;
+    if (currentTrebuchetHeading == 360) {
+      currentTrebuchetHeading = 0;
+    }
     valuesDirty = true;
   } else if (overArmSwitch) {
     if (armSwitchDragStartX == -1) {

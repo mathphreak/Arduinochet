@@ -27,20 +27,27 @@ class Mega {
     if (demo) return;
     if (distance != oldDistance) {
       oldDistance = distance;
-      port.write("d" + oldDistance + " ");
+      String shown = str((int) (oldDistance / 10)) + "." + str(oldDistance % 10); 
+      port.write("d" + shown + " ");
+      println("d" + shown + " ");
     }
     if (heading != oldHeading) {
       oldHeading = heading;
       port.write("h" + oldHeading + " ");
+      println("h" + oldHeading + " ");
     }
     boolean newArmed = (armSwitch == 400);
     if (newArmed != armed) {
       armed = newArmed;
       port.write(newArmed ? "a " : "u ");
+      println(newArmed ? "a " : "u ");
     }
   }
   
   void fire() {
-    if (!demo) port.write("f ");
+    if (!demo) {
+      port.write("f ");
+      println("f ");
+    }
   }
 }
