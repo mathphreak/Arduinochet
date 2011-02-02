@@ -5,10 +5,12 @@
 int inByte;
 char firstRead = 0;
 int inValue = -1;
+int ledPin = 13;
 
 void setup() {
   Serial.begin(9600);  
   pinMode(11, OUTPUT);
+  pinMode(13, OUTPUT);
   // Initialise the IO and ISR
   vw_set_ptt_inverted(true);    // Required for RX Link Module
   vw_setup(2000);                   // Bits per sec
@@ -59,9 +61,31 @@ void loop() {
 void fire() {
   // TODO fire
   Serial.print("fire");
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
+  digitalWrite(13, HIGH);
 }
 
 void armed(boolean stat) {
+  digitalWrite(13, HIGH);
   // TODO set the armed status
 }
 
