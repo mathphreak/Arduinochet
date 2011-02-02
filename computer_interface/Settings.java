@@ -4,14 +4,14 @@ public abstract class Settings {
   private static int counterweight;
   private static int projectileWeight;
   private static int altitude;
-  private static double psi;
+  private static int psi;
   private static Preferences p;
   
   public static void init() {
     p = Preferences.userRoot();
     counterweight = p.getInt("counterweight", 0);
     projectileWeight = p.getInt("projectileWeight", 0);
-    psi = p.getDouble("psi", 0);
+    psi = p.getInt("psi", 0);
     altitude = p.getInt("altitude", 0);
   }
   
@@ -19,7 +19,7 @@ public abstract class Settings {
     return counterweight;
   }
   
-  public static double getPsi() {
+  public static int getPsi() {
     return psi;
   }
   
@@ -46,8 +46,8 @@ public abstract class Settings {
     p.putInt("altitude", altitude);
   }
   
-  public static void setPsi(double nuevo) {
+  public static void setPsi(int nuevo) {
     psi = nuevo;
-    p.putDouble("psi", psi);
+    p.putInt("psi", psi);
   }
 }
