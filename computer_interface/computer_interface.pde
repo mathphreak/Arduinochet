@@ -42,10 +42,14 @@ void mouseMoved() {
   i.mouseMoved();
 }
 
+void keyTyped() {
+  i.keyTyped();
+}
+
 void mouseClicked() {
   b.mouseClicked(); // hcw and head take care of this in draw() to account for holding down
   i.mouseClicked();
-  println(mouseX + "," + mouseY);
+//  println(mouseX + "," + mouseY);
 }
 
 void fire() {
