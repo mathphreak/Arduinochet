@@ -35,7 +35,7 @@ void setup() {
   //  delay(1000);
   //  digitalWrite(29, LOW);
   lcd.createChar(0, newChar);
-  lcd.begin(20,2);
+  lcd.begin(20, 2);
   lcd.setCursor (0, 0);
   lcd.print("Arduinochet v. 0.8");
   lcd.setCursor (20, 4);
@@ -142,19 +142,67 @@ void loop() {
 void fire() {
   // TODO fire
   lcd.print("Firing");
+  lcd.setCursor (20, 4);
+  delay(1000);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(50);
+  lcd.write(0);
+  delay(1000);
+  lcd.clear();
   delay(5000);
   lcd.clear();
-  lcd.print("done firing, please reload trebuchet");
+  lcd.print("done firing,");
+  lcd.setCursor(0, 3);
+  lcd.print("reload trebuchet");
 }
 
 void armed(boolean stat) {
   lcd.clear();
-  lcd.print("armed, ready for launch");
+  lcd.print("-------ARMED--------");
+  lcd.setCursor(0, 3);
+  lcd.print("ready to fire");
 }
 
 void push(char command, int measurement) {
   lcd.clear();
   lcd.print("adjusting");
+  delay(5000);
   lcd.clear();
   // TODO push the measurement
 }
