@@ -1,11 +1,25 @@
-// Mega code.
-
+// Mega code, with 20x4 lcd support//
+#include <LiquidCrystal.h>
 #include <VirtualWire.h>
 #undef int
 #undef abs
 #undef double
 #undef float
 #undef round
+
+LiquidCrystal lcd(7, 8, 36, 38, 40, 42, 9, 10, 11, 12);
+
+byte newChar[8] = {
+	B00000,
+	B00000,
+	B00000,
+	B00000,
+	B00000,
+	B00000,
+	B00000,
+	B11111
+};
+
 
 int inByte = 0;
 char firstRead = 0;
@@ -20,9 +34,73 @@ void setup() {
 //  digitalWrite(29, HIGH);
 //  delay(1000);
 //  digitalWrite(29, LOW);
+lcd.createChar(0, newChar);
+lcd.begin(20,2);
+lcd.setCursor (0, 0);
+lcd.print("Arduinochet v. 0.8");
+lcd.setCursor (20, 4);
+delay(1000);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(50);
+lcd.write(0);
+delay(1000);
+lcd.clear();
+lcd.setCursor(20, 2);
+lcd.print("waiting for input");
+lcd.print(".");
+lcd.print(".");
+lcd.print(".");
+
+
 }
 
 void loop() {
+  lcd.setCursor(20, 2);
+  lcd.print("waiting for input");
+  delay(500);
+  lcd.print(".");
+  delay(500);
+  lcd.print(".");
+  delay(500);
+  lcd.print(".");
+  delay(500);
+  lcd.clear();
 //  digitalWrite(29, LOW);
   if (Serial.available() > 0) {
     inByte = Serial.read();
