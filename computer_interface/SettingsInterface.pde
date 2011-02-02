@@ -46,6 +46,37 @@ class SettingsInterface {
     drawWeights();
     drawAltitude();
     drawPsi();
+    drawRangeEstimate();
+  }
+  
+  void drawRangeEstimate() {
+    noStroke();
+    fill(100);
+    rect(25, 325, 590, max(0, min(50, currentHeight-250)));
+    if (currentHeight-250 > 45) {
+      fill(255);
+      textSize(20);
+      text("Range: ", 30, 370);
+      text("ft.", 590, 370);
+      textSize(50);
+      float cw = Settings.getCounterweight();
+      print("cw=" + str(cw) + ", ");
+      float pw = Settings.getProjectileWeight();
+      print("pw=" + str(pw) + ", ");
+      float hingeCWDist = (hcw.hingeCWDistance/10)/12;
+      print("hingeCWDist=" + str(hingeCWDist) + ", ");
+      float psi = Settings.getPsi() * PI/180;
+      print("psi=" + str(psi) + ", ");
+      float v0 = 100;
+      print("v0=" + str(v0) + ", ");
+      float a = PI/4;
+      print("a=" + str(a) + ", ");
+      int altitude = Settings.getAltitude();
+      print("altitude=" + str(altitude) + ", ");
+      float r = (float) Calculation.range(cw, pw, hingeCWDist, psi, v0, a, altitude);
+      println("r=" + str(r));
+      text(str(r), 100, 370);
+    }
   }
   
   void drawPsi() {
@@ -63,7 +94,7 @@ class SettingsInterface {
     }
     if (currentHeight-175 > 45) {
       text("beam and base at sling):", 30, 295);
-      text("degrees", 500, 295);
+      text("degrees", 540, 295);
       textSize(50);
       text(str(Settings.getPsi()), 260, 295);
     }
@@ -103,7 +134,7 @@ class SettingsInterface {
     }
     if (currentHeight-25 > 45) {
       text("weight: ", 30, 145);
-      text("lbs.", 290, 145);
+      text("lbs.", 280, 145);
       textSize(50);
       text(str(Settings.getCounterweight()), 100, 145);
     }
@@ -122,7 +153,7 @@ class SettingsInterface {
     }
     if (currentHeight-25 > 45) {
       text("weight: ", 350, 145);
-      text("lbs.", 585, 145);
+      text("lbs.", 575, 145);
       textSize(50);
       text(str(Settings.getProjectileWeight()), 435, 145);
     }
