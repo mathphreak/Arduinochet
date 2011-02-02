@@ -88,16 +88,6 @@ void setup() {
 }
 
 void loop() {
-  lcd.setCursor(20, 2);
-  lcd.print("Waiting for input");
-  delay(500);
-  lcd.print(".");
-  delay(500);
-  lcd.print(".");
-  delay(500);
-  lcd.print(".");
-  delay(500);
-  lcd.clear();
   int i;
   if (Serial.available() > 0) {
     inByte = Serial.read();
@@ -136,6 +126,17 @@ void loop() {
         inValue += inByte - 48;
       }
     }
+  } else {
+    lcd.setCursor(20, 2);
+    lcd.print("Waiting for input");
+    delay(500);
+    lcd.print(".");
+    delay(500);
+    lcd.print(".");
+    delay(500);
+    lcd.print(".");
+    delay(500);
+    lcd.clear();
   }
 }
 void fire() {
@@ -196,6 +197,13 @@ void armed(boolean stat) {
   lcd.print("-------ARMED--------");
   lcd.setCursor(0, 3);
   lcd.print("ready to fire");
+  
+  if (!stat) {
+    lcd.clear();
+    lcd.print("------DISARMED-------");
+    lcd.setCursor(0,3);
+    lcd.print("re-arm to fire");
+  }
 }
 
 void push(char command, int measurement) {

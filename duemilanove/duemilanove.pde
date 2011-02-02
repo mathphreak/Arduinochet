@@ -86,6 +86,10 @@ void fire() {
 
 void armed(boolean stat) {
   digitalWrite(13, HIGH);
+  
+  if (!stat) {
+    digitalWrite(13, LOW);
+}
   // TODO set the armed status
 }
 
