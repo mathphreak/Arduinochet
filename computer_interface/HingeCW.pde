@@ -1,6 +1,6 @@
 class HingeCW {
   int heldDownStart = -1;
-  int hingeCWDistance = 200; // inches * 10
+  int hingeCWDistance = 0; // inches * 10
   boolean overHCWPlus = false;
   boolean overHCWMinus = false;
   

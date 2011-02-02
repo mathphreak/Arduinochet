@@ -1,7 +1,7 @@
 class Mega {
   Serial port;
-  int oldDistance;
-  int oldHeading;
+  int oldDistance = -1;
+  int oldHeading = -1;
   boolean armed;
   boolean demo;
   

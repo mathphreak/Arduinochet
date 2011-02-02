@@ -22,6 +22,7 @@ void setup() {
   head = new Heading();
   b = new Buttons();
   i = new SettingsInterface();
+  pushConfig();
 }
 
 void draw() {
