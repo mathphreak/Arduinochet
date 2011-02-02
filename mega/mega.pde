@@ -88,17 +88,16 @@ void setup() {
 }
 
 void loop() {
-  // lcd.setCursor(20, 2);
-  //lcd.print("waiting for input");
-  // delay(500);
-  // lcd.print(".");
-  // delay(500);
-  // lcd.print(".");
-  // delay(500);
-  // lcd.print(".");
-  // delay(500);
-  // lcd.clear();
-  //  digitalWrite(29, LOW);
+  lcd.setCursor(20, 2);
+  lcd.print("Waiting for input");
+  delay(500);
+  lcd.print(".");
+  delay(500);
+  lcd.print(".");
+  delay(500);
+  lcd.print(".");
+  delay(500);
+  lcd.clear();
   int i;
   if (Serial.available() > 0) {
     inByte = Serial.read();
