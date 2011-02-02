@@ -65,5 +65,5 @@ void pushConfig() {
   valuesDirty = false;
   // send configuration data over serial here
   mega.sendConfig(hcw.hingeCWDistance, head.currentTrebuchetHeading, b.currentArmSwitchX);
-  println("Config pushed.");
+//  println("Config pushed.");
 }
