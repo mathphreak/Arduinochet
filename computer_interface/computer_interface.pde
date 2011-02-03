@@ -13,6 +13,7 @@ Buttons b;
 SettingsInterface i;
 
 void setup() {
+  println(Math.sin(90));
   mega = new Mega();
   mega.init();
   size(640, 480);

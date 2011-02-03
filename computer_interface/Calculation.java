@@ -21,6 +21,16 @@ public abstract class Calculation {
     return hingeCWDistance * (1 - Math.sin(psi));
   }
   
+  /**
+   *  Calculates the range of the trebuchet.
+   *  @param cwMass the mass of the counterweight (in pounds) [unused]
+   *  @param pMass the mass of the projectile (in pounds) [unused]
+   *  @param hingeCWDistance the distance from the hinge to the counterweight (in feet) [unused]
+   *  @param psi the distance from the hinge to the counterweight (in radians) [unused]
+   *  @param initialVelocity the initial velocity of the projectile (in ft/s)
+   *  @param angle the angle from horizontal of the projectile when it's fired (in radians)
+   *  @param altitude the altitude of the current location (in feet)
+   */
   public static double range(double cwMass, double pMass, double hingeCWDistance, double psi, double initialVelocity, double angle, int altitude) {
     double h = cwHeight(hingeCWDistance, psi);
     double optimal = 2 * (cwMass / pMass) * h;

@@ -197,6 +197,13 @@ void armed(boolean stat) {
   lcd.print("-------ARMED--------");
   lcd.setCursor(0, 3);
   lcd.print("ready to fire");
+  
+  if (!stat) {
+    lcd.clear();
+    lcd.print("------DISARMED-------");
+    lcd.setCursor(0,3);
+    lcd.print("re-arm to fire");
+  }
 }
 
 void push(char command, int measurement) {

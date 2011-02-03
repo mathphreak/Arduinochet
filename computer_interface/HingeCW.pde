@@ -48,7 +48,15 @@ class HingeCW {
         hingeCWDistance += 1;
         valuesDirty = true;
       } else {
-        if (millis() - heldDownStart > 500) {
+        if (millis() - heldDownStart > 5000) {
+          if (frameCount % 5 == 0) {
+            hingeCWDistance += 1;
+            valuesDirty = true;
+            if (PUSH_ON_CHANGE) {
+              pushConfig();
+            }
+          }
+        } else if (millis() - heldDownStart > 500) {
           if (frameCount % 15 == 0) {
             hingeCWDistance += 1;
             valuesDirty = true;

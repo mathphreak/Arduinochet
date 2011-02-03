@@ -27,9 +27,8 @@ class Mega {
     if (demo) return;
     if (distance != oldDistance) {
       oldDistance = distance;
-      String shown = str((int) (oldDistance / 10)) + "." + str(oldDistance % 10); 
-      port.write("d" + shown + " ");
-      println("d" + shown + " ");
+      port.write("d" + oldDistance + " ");
+      println("d" + oldDistance + " ");
     }
     if (heading != oldHeading) {
       oldHeading = heading;
