@@ -90,5 +90,9 @@ void armed(boolean stat) {
 }
 
 void push(char command, int measurement) {
-  // TODO push the measurement
+  if (command == 'd') {
+    // distance
+  } else {
+    // rotation
+  }
 }
