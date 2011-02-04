@@ -35,7 +35,7 @@ class Heading {
     noStroke();
     rect(25, 0, 10, 60);
     rect(0, 25, 60, 10);
-    if (mousePressed && overHeadingPlus) {
+    if (mousePressedLegit && overHeadingPlus) {
       if (heldDownStart == -1) {
         heldDownStart = millis();
         currentTrebuchetHeading++;
@@ -44,20 +44,31 @@ class Heading {
         }
         valuesDirty = true;
       } else {
-        if (millis() - heldDownStart > 500) {
+        if (millis() - heldDownStart > 5000) {
           if (frameCount % 5 == 0) {
-            currentTrebuchetHeading++;
-            valuesDirty = true;
+            currentTrebuchetHeading += 1;
             if (currentTrebuchetHeading == 360) {
               currentTrebuchetHeading = 0;
             }
+            valuesDirty = true;
+            if (PUSH_ON_CHANGE) {
+              pushConfig();
+            }
+          }
+        } else if (millis() - heldDownStart > 500) {
+          if (frameCount % 15 == 0) {
+            currentTrebuchetHeading += 1;
+            if (currentTrebuchetHeading == 360) {
+              currentTrebuchetHeading = 0;
+            }
+            valuesDirty = true;
             if (PUSH_ON_CHANGE) {
               pushConfig();
             }
           }
         }
       }
-    } else if (!mousePressed) {
+    } else if (!mousePressedLegit) {
       heldDownStart = -1;
     }
     popMatrix();
@@ -69,7 +80,7 @@ class Heading {
     }
     translate(45, 245);
     rect(0, 25, 60, 10);
-    if (mousePressed && overHeadingMinus) {
+    if (mousePressedLegit && overHeadingMinus) {
       if (heldDownStart == -1) {
         heldDownStart = millis();
         currentTrebuchetHeading--;
@@ -78,20 +89,31 @@ class Heading {
         }
         valuesDirty = true;
       } else {
-        if (millis() - heldDownStart > 500) {
+        if (millis() - heldDownStart > 5000) {
           if (frameCount % 5 == 0) {
-            currentTrebuchetHeading--;
-            valuesDirty = true;
+            currentTrebuchetHeading -= 1;
             if (currentTrebuchetHeading == -1) {
               currentTrebuchetHeading = 359;
             }
+            valuesDirty = true;
+            if (PUSH_ON_CHANGE) {
+              pushConfig();
+            }
+          }
+        } else if (millis() - heldDownStart > 500) {
+          if (frameCount % 15 == 0) {
+            currentTrebuchetHeading -= 1;
+            if (currentTrebuchetHeading == -1) {
+              currentTrebuchetHeading = 359;
+            }
+            valuesDirty = true;
             if (PUSH_ON_CHANGE) {
               pushConfig();
             }
           }
         }
       }
-    } else if (!mousePressed) {
+    } else if (!mousePressedLegit) {
       heldDownStart = -1;
     }
     popMatrix();

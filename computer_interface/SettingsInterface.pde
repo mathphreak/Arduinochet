@@ -5,13 +5,18 @@ class SettingsInterface {
   boolean overPW; // projectile weight
   boolean overAltitude;
   boolean overPsi;
+  boolean overAlpha;
+  boolean overV0;
   boolean inCW;
   boolean inPW;
   boolean inAltitude;
   boolean inPsi;
+  boolean inAlpha;
+  boolean inV0;
   int direction = 0;
   float maxY = height - 75;
   Settings s;
+  boolean blocked; // whether or not the rest of the interface is blocked
   
   void draw() {
     pushMatrix();
@@ -40,42 +45,92 @@ class SettingsInterface {
       direction = 0;
       currentHeight = constrain(currentHeight, 0, maxY);
     }
+    blocked = (currentHeight != 0);
     popMatrix();
     fill(250);
     gradient(0, 75, width, maxY, currentHeight, color(250), color(200));
     drawWeights();
     drawAltitude();
     drawPsi();
+    drawAlpha();
+    drawV0();
     drawRangeEstimate();
+  }
+  
+  void drawV0() {
+    noStroke();
+    fill(100);
+    rect(330, 325, 285, max(0, min(50, currentHeight-250)));
+    if (currentHeight-250 > 20) {
+      if (inV0) {
+        fill(0, 255, 200);
+      } else {
+        fill(255);
+      }
+      textSize(20);
+      text("V  (initial", 335, 345);
+    }
+    if (currentHeight-250 > 25) {
+      textSize(15);
+      text("0", 345, 350);
+    }
+    if (currentHeight-250 > 45) {
+      textSize(20);
+      text("velocity): ", 335, 370);
+      text("ft/s", 580, 370);
+      textSize(50);
+      text(str(Settings.getV0()), 420, 370);
+    }
+  }
+  
+  void drawAlpha() {
+    noStroke();
+    fill(100);
+    rect(25, 325, 280, max(0, min(50, currentHeight-250)));
+    if (currentHeight-250 > 20) {
+      if (inAlpha) {
+        fill(0, 255, 200);
+      } else {
+        fill(255);
+      }
+      textSize(20);
+      text("Alpha (angle", 30, 345);
+    }
+    if (currentHeight-250 > 45) {
+      text("of release): ", 30, 370);
+      text("degrees", 230, 370);
+      textSize(50);
+      text(str((int) (Settings.getAlpha() * 180/PI)), 145, 370);
+    }
   }
   
   void drawRangeEstimate() {
     noStroke();
     fill(100);
-    rect(25, 325, 590, max(0, min(50, currentHeight-250)));
-    if (currentHeight-250 > 45) {
+    rect(25, 400, 590, max(0, min(50, currentHeight-325)));
+    if (currentHeight-325 > 45) {
       fill(255);
       textSize(20);
-      text("Range: ", 30, 370);
-      text("ft.", 590, 370);
+      text("Range: ", 30, 445);
+      text("ft.", 590, 445);
       textSize(50);
       float cw = Settings.getCounterweight();
-      print("cw=" + str(cw) + ", ");
+//      print("cw=" + str(cw) + ", ");
       float pw = Settings.getProjectileWeight();
-      print("pw=" + str(pw) + ", ");
-      float hingeCWDist = (hcw.hingeCWDistance/10)/12;
-      print("hingeCWDist=" + str(hingeCWDist) + ", ");
+//      print("pw=" + str(pw) + ", ");
+      float hingeCWDist = ((float) hcw.hingeCWDistance/10)/12;
+//      print("hingeCWDist=" + str(hingeCWDist) + ", ");
       float psi = Settings.getPsi() * PI/180;
-      print("psi=" + str(psi) + ", ");
-      float v0 = 100;
-      print("v0=" + str(v0) + ", ");
-      float a = PI/4;
-      print("a=" + str(a) + ", ");
+//      print("psi=" + str(psi) + ", ");
+      float v0 = Settings.getV0();
+//      print("v0=" + str(v0) + ", ");
+      float a = Settings.getAlpha();
+//      print("a=" + str(a) + ", ");
       int altitude = Settings.getAltitude();
-      print("altitude=" + str(altitude) + ", ");
+//      print("altitude=" + str(altitude) + ", ");
       float r = (float) Calculation.range(cw, pw, hingeCWDist, psi, v0, a, altitude);
-      println("r=" + str(r));
-      text(str(r), 100, 370);
+//      println("r=" + str(r));
+      text(str(r), 100, 445);
     }
   }
   
@@ -204,6 +259,18 @@ class SettingsInterface {
     } else {
       overPsi = false;
     }
+    
+    if (mouseX > 25 && mouseY > 325 && mouseX < (25 + 280) && mouseY < (325 + max(0, min(50, currentHeight-250)))) {
+      overAlpha = true;
+    } else {
+      overAlpha = false;
+    }
+    
+    if (mouseX > 330 && mouseY > 325 && mouseX < (330 + 285) && mouseY < (325 + max(0, min(50, currentHeight-250)))) {
+      overV0 = true;
+    } else {
+      overV0 = false;
+    }
   }
   
   void keyTyped() {
@@ -247,6 +314,26 @@ class SettingsInterface {
         int a = Settings.getPsi();
         Settings.setPsi((a - (a % 10))/10);
       }
+    } else if (inAlpha) {
+      if (key >= '0' && key <= '9') {
+        int a = (int) (Settings.getAlpha() * 180/PI);
+        Settings.setAlpha(((a*10) + ((int) key) - 48)*PI/180);
+      } else if (key == '.') {
+        // TODO use this
+      } else if (key == BACKSPACE) {
+        int a = (int) (Settings.getAlpha() * 180/PI);
+        Settings.setAlpha(((a - (a % 10))/10)*PI/180);
+      }
+    } else if (inV0) {
+      if (key >= '0' && key <= '9') {
+        int a = Settings.getV0();
+        Settings.setV0((a * 10) + ((int) key) - 48);
+      } else if (key == '.') {
+        // TODO use this
+      } else if (key == BACKSPACE) { // backspace
+        int a = Settings.getV0();
+        Settings.setV0((a - (a % 10))/10);
+      }
     }
   }
   
@@ -255,8 +342,14 @@ class SettingsInterface {
     inPW = false;
     inAltitude = false;
     inPsi = false;
+    inAlpha = false;
+    inV0 = false;
     if (overPM) {
-      direction = (currentHeight == 0 ? 1 : -1);
+      if (direction == 0) {
+        direction = (currentHeight == 0 ? 1 : -1);
+      } else {
+        direction = -1 * direction;
+      }
     } else if (overCW) {
       inCW = true;
     } else if (overPW) {
@@ -265,6 +358,10 @@ class SettingsInterface {
       inAltitude = true;
     } else if (overPsi) {
       inPsi = true;
+    } else if (overAlpha) {
+      inAlpha = true;
+    } else if (overV0) {
+      inV0 = true;
     }
   }
   

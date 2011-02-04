@@ -42,7 +42,7 @@ class HingeCW {
     noStroke();
     rect(25, 0, 10, 60);
     rect(0, 25, 60, 10);
-    if (mousePressed && overHCWPlus) {
+    if (mousePressedLegit && overHCWPlus) {
       if (heldDownStart == -1) {
         heldDownStart = millis();
         hingeCWDistance += 1;
@@ -66,7 +66,7 @@ class HingeCW {
           }
         }
       }
-    } else if (!mousePressed) {
+    } else if (!mousePressedLegit) {
       heldDownStart = -1;
     }
     popMatrix();
@@ -80,13 +80,21 @@ class HingeCW {
     }
     translate(45, 120);
     rect(0, 25, 60, 10);
-    if (mousePressed && overHCWMinus) {
+    if (mousePressedLegit && overHCWMinus) {
       if (heldDownStart == -1) {
         heldDownStart = millis();
         hingeCWDistance -= 1;
         valuesDirty = true;
       } else {
-        if (millis() - heldDownStart > 500) {
+        if (millis() - heldDownStart > 5000) {
+          if (frameCount % 5 == 0) {
+            hingeCWDistance -= 1;
+            valuesDirty = true;
+            if (PUSH_ON_CHANGE) {
+              pushConfig();
+            }
+          }
+        } else if (millis() - heldDownStart > 500) {
           if (frameCount % 15 == 0) {
             hingeCWDistance -= 1;
             valuesDirty = true;
@@ -96,7 +104,7 @@ class HingeCW {
           }
         }
       }
-    } else if (!mousePressed) {
+    } else if (!mousePressedLegit) {
       heldDownStart = -1;
     }
     popMatrix();

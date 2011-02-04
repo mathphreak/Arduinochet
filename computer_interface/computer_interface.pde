@@ -11,6 +11,7 @@ HingeCW hcw;
 Heading head;
 Buttons b;
 SettingsInterface i;
+boolean mousePressedLegit;
 
 void setup() {
   println(Math.sin(90));
@@ -35,6 +36,8 @@ void draw() {
   head.draw();
   b.draw();
   i.draw();
+  mousePressedLegit = (mousePressed && !b.blocked && !i.blocked);
+  println(mousePressedLegit);
 }
 
 void mouseMoved() {
@@ -49,8 +52,8 @@ void keyTyped() {
 }
 
 void mouseClicked() {
-  b.mouseClicked(); // hcw and head take care of this in draw() to account for holding down
-  i.mouseClicked();
+  if (!i.blocked) b.mouseClicked(); // hcw and head take care of this in draw() to account for holding down
+  if (!b.blocked) i.mouseClicked();
 //  println(mouseX + "," + mouseY);
 }
 
@@ -65,6 +68,7 @@ void fire() {
 void pushConfig() {
   valuesDirty = false;
   // send configuration data over serial here
-  mega.sendConfig(hcw.hingeCWDistance, head.currentTrebuchetHeading, b.currentArmSwitchX);
-//  println("Config pushed.");
+  if (mega.sendConfig(hcw.hingeCWDistance, head.currentTrebuchetHeading, b.currentArmSwitchX)) {
+    println("Config pushed.");
+  }
 }

@@ -23,24 +23,29 @@ class Mega {
     }
   }
   
-  void sendConfig(int distance, int heading, int armSwitch) {
-    if (demo) return;
+  boolean sendConfig(int distance, int heading, int armSwitch) {
+    if (demo) return false;
+    boolean res = false;
     if (distance != oldDistance) {
       oldDistance = distance;
       port.write("d" + oldDistance + " ");
       println("d" + oldDistance + " ");
+      res = true;
     }
     if (heading != oldHeading) {
       oldHeading = heading;
       port.write("h" + oldHeading + " ");
       println("h" + oldHeading + " ");
+      res = true;
     }
     boolean newArmed = (armSwitch == 400);
     if (newArmed != armed) {
       armed = newArmed;
       port.write(newArmed ? "a " : "u ");
       println(newArmed ? "a " : "u ");
+      res = true;
     }
+    return res;
   }
   
   void fire() {

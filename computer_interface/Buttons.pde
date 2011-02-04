@@ -7,6 +7,18 @@ class Buttons {
   int currentBlockOpacity = 0;
   int launchStart = -1;
   boolean overLaunchButton = false;
+  boolean blocked;
+  
+  void drawOpaqueRect() {
+    fill(0, currentBlockOpacity);
+    rect(0, 0, width, height);
+    if (currentArmSwitchX == 400) {
+      if (currentBlockOpacity < 200) currentBlockOpacity += 2;
+    } else {
+      if (currentBlockOpacity > 0) currentBlockOpacity -= 2;
+    }
+    blocked = (currentBlockOpacity != 0);
+  }
   
   void mouseClicked() {
     if (overArmSwitch) {
@@ -85,14 +97,7 @@ class Buttons {
       fill(255);
       text("Manual", 150, 440);
     }
-    // dark rectangle
-    fill(0, currentBlockOpacity);
-    rect(0, 0, width, height);
-    if (currentArmSwitchX == 400) {
-      if (currentBlockOpacity < 200) currentBlockOpacity += 2;
-    } else {
-      if (currentBlockOpacity > 0) currentBlockOpacity -= 2;
-    }
+    drawOpaqueRect();
     // LAUNCH
     fill(100);
     rect(250, 350, 365, 100);
