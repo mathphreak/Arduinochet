@@ -7,6 +7,7 @@ class Buttons {
   int currentBlockOpacity = 0;
   int launchStart = -1;
   boolean overLaunchButton = false;
+  boolean blocked;
   
   void drawOpaqueRect() {
     fill(0, currentBlockOpacity);
@@ -16,6 +17,7 @@ class Buttons {
     } else {
       if (currentBlockOpacity > 0) currentBlockOpacity -= 2;
     }
+    blocked = (currentBlockOpacity != 0);
   }
   
   void mouseClicked() {

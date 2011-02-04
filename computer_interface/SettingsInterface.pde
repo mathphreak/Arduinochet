@@ -16,6 +16,7 @@ class SettingsInterface {
   int direction = 0;
   float maxY = height - 75;
   Settings s;
+  boolean blocked; // whether or not the rest of the interface is blocked
   
   void draw() {
     pushMatrix();
@@ -44,6 +45,7 @@ class SettingsInterface {
       direction = 0;
       currentHeight = constrain(currentHeight, 0, maxY);
     }
+    blocked = (currentHeight != 0);
     popMatrix();
     fill(250);
     gradient(0, 75, width, maxY, currentHeight, color(250), color(200));
