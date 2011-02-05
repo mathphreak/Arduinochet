@@ -43,7 +43,7 @@
 
 	  var attributes = { 
             code: 'computer_interface.class',
-            archive: 'computer_interface.jar',
+            archive: 'computer_interface.jar,RXTXcomm.jar,serial.jar,core.jar',
             width: 640, 
             height: 480,
             image: 'loading.gif'
@@ -59,11 +59,11 @@
 	  <!--[if !IE]> -->
 	  <object classid="java:computer_interface.class" 
             	  type="application/x-java-applet"
-            	  archive="computer_interface.jar"
+            	  archive="computer_interface.jar,RXTXcomm.jar,serial.jar,core.jar"
             	  width="640" height="480"
             	  standby="Loading Processing software..." >
             
-	    <param name="archive" value="computer_interface.jar" />
+	    <param name="archive" value="computer_interface.jar,RXTXcomm.jar,serial.jar,core.jar" />
 	    
 	    <param name="mayscript" value="true" />
 	    <param name="scriptable" value="true" />
@@ -85,7 +85,7 @@
 		    standby="Loading Processing software..."  >
 	      
 	      <param name="code" value="computer_interface" />
-	      <param name="archive" value="computer_interface.jar" />
+	      <param name="archive" value="computer_interface.jar,RXTXcomm.jar,serial.jar,core.jar" />
 	      
 	      <param name="mayscript" value="true" />
 	      <param name="scriptable" value="true" />
@@ -121,14 +121,13 @@
       </p>
       
       <p>
-	Source code: <a href="computer_interface.pde">computer_interface</a> 
+	Source code: <a href="computer_interface.pde">computer_interface</a> <a href="Buttons.pde">Buttons</a> <a href="Calculation.java">Calculation</a> <a href="Heading.pde">Heading</a> <a href="HingeCW.pde">HingeCW</a> <a href="JackProofing.pde">JackProofing</a> <a href="Mega.pde">Mega</a> <a href="SerialPortChooser.java">SerialPortChooser</a> <a href="Settings.java">Settings</a> <a href="SettingsInterface.pde">SettingsInterface</a> 
       </p>
       
       <p>
 	Built with <a href="http://processing.org" title="Processing.org">Processing</a>
       </p>
     </div>
-
   <script type="text/javascript" src="stats.js" />
   </body>
 </html>
