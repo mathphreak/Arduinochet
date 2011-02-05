@@ -11,6 +11,7 @@ HingeCW hcw;
 Heading head;
 Buttons b;
 SettingsInterface i;
+JackProofing jp;
 boolean mousePressedLegit;
 
 void setup() {
@@ -24,6 +25,7 @@ void setup() {
   head = new Heading();
   b = new Buttons();
   i = new SettingsInterface();
+  jp = new JackProofing();
   pushConfig();
 }
 
@@ -36,8 +38,8 @@ void draw() {
   head.draw();
   b.draw();
   i.draw();
-  mousePressedLegit = (mousePressed && !b.blocked && !i.blocked);
-  println(mousePressedLegit);
+  jp.draw();
+  mousePressedLegit = (mousePressed && !b.blocked && !i.blocked && !jp.blocked);
 }
 
 void mouseMoved() {
@@ -45,15 +47,17 @@ void mouseMoved() {
   head.mouseMoved();
   b.mouseMoved();
   i.mouseMoved();
+  jp.mouseMoved();
 }
 
 void keyTyped() {
-  i.keyTyped();
+  i.keyTyped(); // only reacts if in something
+  jp.keyTyped(); // needs to know for re-enabling
 }
 
 void mouseClicked() {
-  if (!i.blocked) b.mouseClicked(); // hcw and head take care of this in draw() to account for holding down
-  if (!b.blocked) i.mouseClicked();
+  if (!i.blocked && !jp.blocked) b.mouseClicked(); // hcw and head take care of this in draw() to account for holding down
+  if (!b.blocked && !jp.blocked) i.mouseClicked();
 //  println(mouseX + "," + mouseY);
 }
 
