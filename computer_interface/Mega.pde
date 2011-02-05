@@ -5,6 +5,10 @@ class Mega {
   boolean armed;
   boolean demo;
   
+  Mega() {
+    demo = true;
+  }
+  
   void init() {
     String[] ser = Serial.list();
     String[] options = new String[ser.length + 1];

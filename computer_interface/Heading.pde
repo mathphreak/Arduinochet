@@ -20,12 +20,33 @@ class Heading {
   }
   
   void draw() {
+    pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, 0);
     fill(100);
     rect(25, 225, 590, 100);
+    popMatrix();
+    
+    pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
     fill(255);
     textSize(20);
-    text("Heading: " + currentTrebuchetHeading + "\u00b0", 115, 275);
+    translate(0, -50, thickness);
+    text("Heading: " + currentTrebuchetHeading + "\u00b0", 115, 275, 0);
+    popMatrix();
+    
     pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, thickness);
     translate(545, 245);
     if (overHeadingPlus) {
       fill(0, 255, 200);
@@ -72,7 +93,13 @@ class Heading {
       heldDownStart = -1;
     }
     popMatrix();
+    
     pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, thickness);
     if (overHeadingMinus) {
       fill(0, 255, 200);
     } else {
@@ -117,7 +144,13 @@ class Heading {
       heldDownStart = -1;
     }
     popMatrix();
+    
     pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, thickness);
     translate(400, 260);
     rotate(currentTrebuchetHeading * PI/180);
     fill(255);

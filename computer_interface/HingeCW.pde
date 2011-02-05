@@ -23,16 +23,36 @@ class HingeCW {
     // Rectangle
     noStroke();
     fill(100);
+    pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, 0);
     rect(25, 100, 590, 100);
+    popMatrix();
     
     // Text
+    noStroke();
     fill(255);
     textSize(20);
-    String shown = str((int) (hingeCWDistance / 10)) + "." + str(hingeCWDistance % 10); 
+    pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    String shown = str((int) (hingeCWDistance / 10)) + "." + str(hingeCWDistance % 10);
+    translate(0, -50, thickness);
     text("Hinge-Counterweight Distance: " + shown + "\"", 115, 150);
+    popMatrix();
     
     // Plus
     pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, thickness);
     translate(545, 120);
     if (overHCWPlus) {
       fill(0, 255, 200);
@@ -73,6 +93,11 @@ class HingeCW {
     
     // Minus
     pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, thickness);
     if (overHCWMinus) {
       fill(0, 255, 200);
     } else {
