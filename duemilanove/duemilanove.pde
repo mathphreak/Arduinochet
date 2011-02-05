@@ -6,11 +6,24 @@ int inByte;
 char firstRead = 0;
 int inValue = -1;
 int ledPin = 13;
+int hingeCWPin = 2;
+int hingeCWReversePin = 3;
+int headingPin = 4;
+int releasePin = 5;
+int millisForPointOneInch = 100;
+int millisForOneDegree = 50;
+int millisForReleaseRevolution = 1000;
+int lastHingeCW = 0;
+int lastHeading = 0;
 
 void setup() {
   Serial.begin(9600);  
   pinMode(11, OUTPUT);
   pinMode(13, OUTPUT);
+  pinMode(hingeCWPin, OUTPUT);
+  pinMode(hingeCWReversePin, OUTPUT);
+  pinMode(headingPin, OUTPUT);
+  pinMode(releasePin, OUTPUT);
   // Initialise the IO and ISR
   vw_set_ptt_inverted(true);    // Required for RX Link Module
   vw_setup(2000);                   // Bits per sec
@@ -59,9 +72,11 @@ void loop() {
 }
 
 void fire() {
-  // TODO fire
   Serial.print("fire");
-  digitalWrite(13, HIGH);
+  digitalWrite(releasePin, HIGH);
+  delay(millisForReleaseRevolution);
+  digitalWrite(releasePin, LOW);
+/*  digitalWrite(13, HIGH);
   delay(1000);
   digitalWrite(13, LOW);
   delay(1000);
@@ -81,7 +96,7 @@ void fire() {
   delay(1000);
   digitalWrite(13, LOW);
   delay(1000);
-  digitalWrite(13, HIGH);
+  digitalWrite(13, HIGH);*/
 }
 
 void armed(boolean stat) {
@@ -89,14 +104,39 @@ void armed(boolean stat) {
   
   if (!stat) {
     digitalWrite(13, LOW);
-}
-  // TODO set the armed status
+  }
 }
 
 void push(char command, int measurement) {
   if (command == 'd') {
-    // distance
+    if (measurement == 0) { // reset
+      digitalWrite(hingeCWReversePin, HIGH);
+      digitalWrite(hingeCWPin, HIGH);
+      delay(millisForPointOneInch * 200); // pretend we're reversing 20 inches (i know that our distance is less than that)
+      digitalWrite(hingeCWPin, LOW);
+      digitalWrite(hingeCWReversePin, LOW);
+      return;
+    }
+    boolean reverse = (measurement < lastHingeCW);
+    digitalWrite(hingeCWReversePin, reverse ? HIGH : LOW);
+    digitalWrite(hingeCWPin, HIGH);
+    delay(millisForPointOneInch * abs(measurement - lastHingeCW));
+    digitalWrite(hingeCWPin, LOW);
+    digitalWrite(hingeCWReversePin, LOW);
+    lastHingeCW = measurement;
   } else {
-    // rotation
+    if (measurement == 0) {
+      digitalWrite(headingPin, HIGH);
+      delay(millisForOneDegree * 360); // pointless, but we can change it later
+      digitalWrite(headingPin, LOW);
+      return;
+    }
+    int distance = measurement - lastHeading;
+    if (measurement < lastHeading) {
+      distance += 360;
+    }
+    digitalWrite(headingPin, HIGH);
+    delay(millisForOneDegree * distance);
+    digitalWrite(headingPin, LOW);
   }
 }
