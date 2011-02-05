@@ -15,7 +15,7 @@ JackProofing jp;
 boolean mousePressedLegit;
 
 void setup() {
-  println(Math.sin(90));
+  println(floor(log(522577666)/log(10)));
   mega = new Mega();
   mega.init();
   size(640, 480);

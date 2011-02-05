@@ -8,6 +8,8 @@ class JackProofing {
   int readNumber = 0;
   int lastActionTime = -1;
   final int timeoutInSeconds = 10;
+  boolean failed = false;
+  int failTime = 0;
   
   void mouseMoved() {
     if (mouseX == width-1 || mouseY == height-1) {
@@ -29,7 +31,14 @@ class JackProofing {
     blocked = true; // at this point, we know that we are active, and therefore blocking the interface
     // background
     noStroke();
-    fill(0, 255, 200);
+    if (failed) {
+      fill(255, 0, 0);
+      if (millis() - failTime > 5000) {
+        failed = false;
+      }
+    } else {
+      fill(0, 255, 200);
+    }
     roundedRect(0, 0, width, height, 50);
     // text
     fill(255);
@@ -37,11 +46,11 @@ class JackProofing {
     if (inCorner) {
       text(str(readNumber), width/2 - ((floor(log10(readNumber))) * 25), height/2 - 75);
     }
-    text("This program is Jack-proof", width/2 - 290, height/2 + 25);
+    text("Arduinochet v0.8\nauthentication " + (failed ? "invalid" : "required"), width/2 - 270, height/2);
     pushMatrix();
     translate(width/2 - 25, height/2 + 125);
     rotate(PI/2);
-    text(":)", 0, 0);
+    //text(":)", 0, 0);
     popMatrix();
   }
   
@@ -62,6 +71,11 @@ class JackProofing {
       if (!active) {
         lastActionTime = millis();
       }
+      readNumber = 0;
+    } else if (floor(log10(readNumber))+1 == 9) {
+      // we have all nine digits, but we aren't perfectly matched
+      failed = true;
+      failTime = millis();
       readNumber = 0;
     }
   }
