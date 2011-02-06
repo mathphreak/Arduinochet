@@ -7,7 +7,7 @@ class Buttons {
   int currentBlockOpacity = 0;
   int launchStart = -1;
   boolean overLaunchButton = false;
-  boolean blocked;
+  boolean blocked = false;
   
   void drawOpaqueRect() {
     pushMatrix();
@@ -120,7 +120,7 @@ class Buttons {
     }
     popMatrix();
     
-    drawOpaqueRect();
+//    drawOpaqueRect();
     // LAUNCH
     pushMatrix();
     translate(200, 500, 50);

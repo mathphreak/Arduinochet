@@ -54,7 +54,7 @@ void draw() {
   hcw.draw();
   head.draw();
   b.draw();
-//  i.draw();
+  i.draw();
 //  jp.draw();
   mousePressedLegit = (mousePressed && !b.blocked && !i.blocked && !jp.blocked);
 }

@@ -20,12 +20,29 @@ class SettingsInterface {
   
   void draw() {
     pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
     translate(600, 30);
-    rotate(currentHeight/maxY * 4*PI);
+    
+    pushMatrix();
+    translate(0, -50, 0);
+    rotateY(currentHeight/maxY * 4*PI);
     fill(255);
     ellipse(0, 0, 45, 45);
+    popMatrix();
+    
+    pushMatrix();
+    translate(0, -50, thickness);
+    rotateY(currentHeight/maxY * 4*PI);
     fill(200);
     ellipse(0, 0, 40, 40);
+    popMatrix();
+    
+    pushMatrix();
+    translate(0, -50, thickness*2);
+    rotateY(currentHeight/maxY * 4*PI);
     color fillColor;
     if (overPM) {
       fillColor = color(0, 255, 200);
@@ -34,12 +51,19 @@ class SettingsInterface {
     }
     fill(fillColor);
     rect(-15, -5, 30, 10);
+    popMatrix();
+    
+    pushMatrix();
+    translate(0, -50, thickness*3);
+    rotateY(currentHeight/maxY * 4*PI);
     float r = red(fillColor);
     float g = green(fillColor);
     float b = blue(fillColor);
     float a = 255 - (currentHeight/maxY * 255);
     fill(r, g, b, a);
     rect(-5, -15, 10, 30);
+    popMatrix();
+    
     currentHeight += (direction * 4);
     if (currentHeight > maxY || currentHeight < 0) {
       direction = 0;
@@ -47,7 +71,13 @@ class SettingsInterface {
     }
     blocked = (currentHeight != 0);
     popMatrix();
-    fill(250);
+    
+    pushMatrix();
+    translate(200, 500, 50);
+    rotateX(PI - QUARTER_PI);
+    rotateY(-QUARTER_PI);
+    rotateZ(0.2*PI);
+    translate(0, -50, thickness*10);
     gradient(0, 75, width, maxY, currentHeight, color(250), color(200));
     drawWeights();
     drawAltitude();
@@ -55,9 +85,12 @@ class SettingsInterface {
     drawAlpha();
     drawV0();
     drawRangeEstimate();
+    popMatrix();
   }
   
   void drawV0() {
+    pushMatrix();
+    translate(0, 0, thickness);
     noStroke();
     fill(100);
     rect(330, 325, 285, max(0, min(50, currentHeight-250)));
@@ -67,6 +100,7 @@ class SettingsInterface {
       } else {
         fill(255);
       }
+      translate(0, 0, thickness);
       textSize(20);
       text("V  (initial", 335, 345);
     }
@@ -81,9 +115,12 @@ class SettingsInterface {
       textSize(50);
       text(str(Settings.getV0()), 420, 370);
     }
+    popMatrix();
   }
   
   void drawAlpha() {
+    pushMatrix();
+    translate(0, 0, thickness);
     noStroke();
     fill(100);
     rect(25, 325, 280, max(0, min(50, currentHeight-250)));
@@ -93,6 +130,7 @@ class SettingsInterface {
       } else {
         fill(255);
       }
+      translate(0, 0, thickness); 
       textSize(20);
       text("Alpha (angle", 30, 345);
     }
@@ -102,15 +140,19 @@ class SettingsInterface {
       textSize(50);
       text(str((int) (Settings.getAlpha() * 180/PI)), 145, 370);
     }
+    popMatrix();
   }
   
   void drawRangeEstimate() {
+    pushMatrix();
+    translate(0, 0, thickness*3);
     noStroke();
     fill(100);
     rect(25, 400, 590, max(0, min(50, currentHeight-325)));
     if (currentHeight-325 > 45) {
       fill(255);
       textSize(20);
+      translate(0, 0, thickness);
       text("Range: ", 30, 445);
       text("ft.", 590, 445);
       textSize(50);
@@ -132,9 +174,12 @@ class SettingsInterface {
 //      println("r=" + str(r));
       text(str(r), 100, 445);
     }
+    popMatrix();
   }
   
   void drawPsi() {
+    pushMatrix();
+    translate(0, 0, thickness);
     noStroke();
     fill(100);
     rect(25, 250, 590, max(0, min(50, currentHeight-175)));
@@ -144,6 +189,7 @@ class SettingsInterface {
       } else {
         fill(255);
       }
+      translate(0, 0, thickness);
       textSize(20);
       text("\u03C8 (angle formed between", 30, 270);
     }
@@ -153,9 +199,12 @@ class SettingsInterface {
       textSize(50);
       text(str(Settings.getPsi()), 260, 295);
     }
+    popMatrix();
   }
   
   void drawAltitude() {
+    pushMatrix();
+    translate(0, 0, thickness);
     noStroke();
     fill(100);
     rect(25, 175, 590, max(0, min(50, currentHeight-100)));
@@ -165,15 +214,19 @@ class SettingsInterface {
       } else {
         fill(255);
       }
+      translate(0, 0, thickness);
       textSize(20);
       text("Altitude:", 30, 220);
       text("ft. above sea level", 450, 220);
       textSize(50);
       text(str(Settings.getAltitude()), 110, 220);
     }
+    popMatrix();
   }
   
   void drawWeights() {
+    pushMatrix();
+    translate(0, 0, thickness*3);
     // counterweight
     noStroke();
     fill(100);
@@ -184,6 +237,7 @@ class SettingsInterface {
       } else {
         fill(255);
       }
+      translate(0, 0, thickness);
       textSize(20);
       text("Counter", 30, 120);
     }
@@ -193,7 +247,10 @@ class SettingsInterface {
       textSize(50);
       text(str(Settings.getCounterweight()), 100, 145);
     }
+    popMatrix();
     // projectile
+    pushMatrix();
+    translate(0, 0, thickness*3);
     noStroke();
     fill(100);
     rect(345, 100, 270, max(0, min(50, currentHeight-25)));
@@ -203,6 +260,7 @@ class SettingsInterface {
       } else {
         fill(255);
       }
+      translate(0, 0, thickness);
       textSize(20);
       text("Projectile", 350, 120);
     }
@@ -212,6 +270,7 @@ class SettingsInterface {
       textSize(50);
       text(str(Settings.getProjectileWeight()), 435, 145);
     }
+    popMatrix();
   }
   
   void gradient(int x, int y, float w, float h, float aH, color c1, color c2) {
