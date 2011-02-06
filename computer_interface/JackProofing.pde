@@ -58,13 +58,15 @@ class JackProofing {
     return (log(x) / log(10));
   }
   
-  void keyTyped() {
-    if (key != BACKSPACE) {
+  boolean keyTyped() {
+    if ((((int) key) <= '9') && (((int) key) >= '0')) {
       readNumber *= 10;
       readNumber += ((int) key) - 48; // convert to number represented
-    } else {
+      return true;
+    } else if (key == BACKSPACE) {
       readNumber -= (readNumber % 10);
       readNumber /= 10;
+      return true;
     }
     if (readNumber == secretCode) {
       active = !active;
@@ -78,6 +80,7 @@ class JackProofing {
       failTime = millis();
       readNumber = 0;
     }
+    return false;
   }
   
   void roundedRect(int x, int y, int w, int h, int depth) {

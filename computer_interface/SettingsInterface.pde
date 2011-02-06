@@ -332,68 +332,81 @@ class SettingsInterface {
     }
   }
   
-  void keyTyped() {
+  boolean keyTyped() {
     if (inCW) {
       if (key >= '0' && key <= '9') {
         int cw = Settings.getCounterweight();
         Settings.setCounterweight((cw * 10) + ((int) key) - 48);
+        return true;
       } else if (key == '.') {
         // TODO use this
       } else if (key == BACKSPACE) { // backspace
         int cw = Settings.getCounterweight();
         Settings.setCounterweight((cw - (cw % 10))/10);
+        return true;
       }
     } else if (inPW) {
       if (key >= '0' && key <= '9') {
         int pw = Settings.getProjectileWeight();
         Settings.setProjectileWeight((pw * 10) + ((int) key) - 48);
+        return true;
       } else if (key == '.') {
         // TODO use this
       } else if (key == BACKSPACE) { // backspace
         int pw = Settings.getProjectileWeight();
         Settings.setProjectileWeight((pw - (pw % 10))/10);
+        return true;
       }
     } else if (inAltitude) {
       if (key >= '0' && key <= '9') {
         int a = Settings.getAltitude();
         Settings.setAltitude((a * 10) + ((int) key) - 48);
+        return true;
       } else if (key == '.') {
         // TODO use this
       } else if (key == BACKSPACE) { // backspace
         int a = Settings.getAltitude();
         Settings.setAltitude((a - (a % 10))/10);
+        return true;
       }
     } else if (inPsi) {
       if (key >= '0' && key <= '9') {
         int a = Settings.getPsi();
         Settings.setPsi((a * 10) + ((int) key) - 48);
+        return true;
       } else if (key == '.') {
         // TODO use this
       } else if (key == BACKSPACE) { // backspace
         int a = Settings.getPsi();
         Settings.setPsi((a - (a % 10))/10);
+        return true;
       }
     } else if (inAlpha) {
       if (key >= '0' && key <= '9') {
         int a = (int) (Settings.getAlpha() * 180/PI);
         Settings.setAlpha(((a*10) + ((int) key) - 48)*PI/180);
+        return true;
       } else if (key == '.') {
         // TODO use this
       } else if (key == BACKSPACE) {
         int a = (int) (Settings.getAlpha() * 180/PI);
         Settings.setAlpha(((a - (a % 10))/10)*PI/180);
+        return true;
       }
     } else if (inV0) {
       if (key >= '0' && key <= '9') {
         int a = Settings.getV0();
         Settings.setV0((a * 10) + ((int) key) - 48);
+        return true;
       } else if (key == '.') {
         // TODO use this
       } else if (key == BACKSPACE) { // backspace
         int a = Settings.getV0();
         Settings.setV0((a - (a % 10))/10);
+        return true;
       }
     }
+    return false;
   }
   
   void mouseClicked() {

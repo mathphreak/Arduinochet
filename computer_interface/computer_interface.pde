@@ -1,3 +1,5 @@
+import processing.opengl.*;
+
 import processing.serial.*;
 
 // This code is in the public domain.
@@ -16,15 +18,8 @@ Camera c;
 boolean mousePressedLegit;
 int thickness = 1;
 
-void trueBox(int w, int h, int d) {
-  pushMatrix();
-  translate(w/2, h/2, d/2);
-  box(w, h, d);
-  popMatrix();
-}
-
 void setup() {
-  size(640, 480, P3D);
+  size(640, 480, OPENGL);
   c = new Camera();
   println(floor(log(522577666)/log(10)));
   mega = new Mega();
@@ -68,9 +63,15 @@ void mouseMoved() {
 }
 
 void keyTyped() {
-  i.keyTyped(); // only reacts if in something
-  jp.keyTyped(); // needs to know for re-enabling
-  if (!i.blocked && !jp.blocked) c.keyTyped();
+  boolean a = i.keyTyped(); // only reacts if in something
+  if (a) return;
+  println("i didn't eat it");
+  if (!i.blocked) {
+    boolean b = jp.keyTyped(); // needs to know for re-enabling
+    if (b) return;
+  }
+  println("jp didn't eat it");
+  c.keyTyped();
 }
 
 void mouseClicked() {
