@@ -82,9 +82,6 @@ void setup() {
   delay(1000);
   lcd.clear();
   lcd.setCursor(20, 2);
-
-
-
 }
 
 void loop() {
@@ -126,7 +123,7 @@ void loop() {
         inValue += inByte - 48;
       }
     }
-  } else {
+  }/* else {
     lcd.setCursor(20, 2);
     lcd.print("Waiting for input");
     delay(500);
@@ -137,8 +134,9 @@ void loop() {
     lcd.print(".");
     delay(500);
     lcd.clear();
-  }
+  }*/
 }
+
 void fire() {
   // TODO fire
   lcd.print("Firing");
@@ -193,12 +191,12 @@ void fire() {
 }
 
 void armed(boolean stat) {
-  lcd.clear();
-  lcd.print("-------ARMED--------");
-  lcd.setCursor(0, 3);
-  lcd.print("ready to fire");
-  
-  if (!stat) {
+  if (stat) {
+    lcd.clear();
+    lcd.print("-------ARMED--------");
+    lcd.setCursor(0, 3);
+    lcd.print("ready to fire");
+  } else {
     lcd.clear();
     lcd.print("------DISARMED-------");
     lcd.setCursor(0,3);
