@@ -34,7 +34,7 @@ void setup() {
   //  digitalWrite(29, HIGH);
   //  delay(1000);
   //  digitalWrite(29, LOW);
-  lcd.createChar(0, newChar);
+/*  lcd.createChar(0, newChar);
   lcd.begin(20, 2);
   lcd.setCursor (0, 0);
   lcd.print("Arduinochet v. 0.8");
@@ -81,7 +81,7 @@ void setup() {
   lcd.write(0);
   delay(1000);
   lcd.clear();
-  lcd.setCursor(20, 2);
+  lcd.setCursor(20, 2);*/
 }
 
 void loop() {
@@ -91,11 +91,12 @@ void loop() {
     uint8_t message[2];
     message[0] = inByte;
     message[1] = (uint8_t) 0;
-    vw_send(message, 1);
+    lcd.write(inByte);
+    vw_send(message, 2);
     vw_wait_tx();
+    char inChar = (char) inByte;
+    Serial.print(inChar);
     if (firstRead == 0) {
-      char inChar = (char) inByte;
-      Serial.print(inChar);
       if (inChar == 'f') {
         fire();
       } 
@@ -139,7 +140,7 @@ void loop() {
 
 void fire() {
   // TODO fire
-  lcd.print("Firing");
+/*  lcd.print("Firing");
   lcd.setCursor (20, 4);
   delay(1000);
   lcd.write(0);
@@ -187,11 +188,11 @@ void fire() {
   lcd.clear();
   lcd.print("done firing,");
   lcd.setCursor(0, 3);
-  lcd.print("reload trebuchet");
+  lcd.print("reload trebuchet");*/
 }
 
 void armed(boolean stat) {
-  if (stat) {
+/*  if (stat) {
     lcd.clear();
     lcd.print("-------ARMED--------");
     lcd.setCursor(0, 3);
@@ -201,15 +202,15 @@ void armed(boolean stat) {
     lcd.print("------DISARMED-------");
     lcd.setCursor(0,3);
     lcd.print("re-arm to fire");
-  }
+  }*/
 }
 
 void push(char command, int measurement) {
-  lcd.clear();
+/*  lcd.clear();
   lcd.print("adjusting");
   delay(5000);
   lcd.clear();
-  // TODO push the measurement
+  // TODO push the measurement*/
 }
 
 
