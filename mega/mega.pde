@@ -34,9 +34,9 @@ void setup() {
   //  digitalWrite(29, HIGH);
   //  delay(1000);
   //  digitalWrite(29, LOW);
-/*  lcd.createChar(0, newChar);
+  lcd.createChar(0, newChar);
   lcd.begin(20, 2);
-  lcd.setCursor (0, 0);
+/*  lcd.setCursor (0, 0);
   lcd.print("Arduinochet v. 0.8");
   lcd.setCursor (20, 4);
   delay(1000);
@@ -88,11 +88,12 @@ void loop() {
   int i;
   if (Serial.available() > 0) {
     inByte = Serial.read();
-    uint8_t message[2];
+    uint8_t message[3];
     message[0] = inByte;
-    message[1] = (uint8_t) 0;
+    message[1] = inByte;
+    message[2] = (uint8_t) 0;
     lcd.write(inByte);
-    vw_send(message, 2);
+    vw_send(message, 3);
     vw_wait_tx();
     char inChar = (char) inByte;
     Serial.print(inChar);

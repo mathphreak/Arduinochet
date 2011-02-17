@@ -5,21 +5,20 @@
 int inByte;
 char firstRead = 0;
 int inValue = -1;
-int ledPin = 13;
+int ledPin = 11;
 int hingeCWPin = 2;
 int hingeCWReversePin = 4;
 int headingPin = 5;
 int releasePin = 6;
-int millisForPointOneInch = 100;
-int millisForOneDegree = 50;
-int millisForReleaseRevolution = 1000;
+int millisForPointOneInch = 1;
+int millisForOneDegree = 1;
+int millisForReleaseRevolution = 1;
 int lastHingeCW = 0;
 int lastHeading = 0;
 
 void setup() {
-  Serial.begin(9600);  
-  pinMode(11, OUTPUT);
-  pinMode(13, OUTPUT);
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
   pinMode(hingeCWPin, OUTPUT);
   pinMode(hingeCWReversePin, OUTPUT);
   pinMode(headingPin, OUTPUT);
@@ -35,30 +34,43 @@ void loop() {
   uint8_t buf[VW_MAX_MESSAGE_LEN];
   uint8_t buflen = VW_MAX_MESSAGE_LEN;
   
+//  Serial.println(millis()); // this was for debugging purposes only
+  
   if (vw_get_message(buf, &buflen)) {
-//    digitalWrite(11, HIGH);
+//    digitalWrite(ledPin, HIGH);
 //    delay(1000);
-//    digitalWrite(11, LOW);
+//    digitalWrite(ledPin, LOW);
     int i;
     for (i = 0; i < buflen; i++) {
+      if (buf[i] == 0) continue;
+      byte newByte = buf[i];
+      if (newByte == inByte) continue; // if this is the same as the last one, then ignore it
       inByte = buf[i];
-      if (firstRead == 0) {
+      if (firstRead == -1) {
         char inChar = (char) inByte;
-        Serial.print(inChar);
+        Serial.println("something new");
         if (inChar == 'f') {
+          Serial.println("it's fire");
           fire();
+          Serial.println("it was fire");
         } else if (inChar == 'a') {
+          Serial.println("it's armed");
           armed(true);
+          Serial.println("it was armed");
         } else if (inChar == 'u') {
+          Serial.println("it's unarmed");
           armed(false);
+          Serial.println("it was unarmed");
         } else {
+          Serial.println("it's " + inChar);
           firstRead = inChar;
+          Serial.println("it was " + inChar);
         }
       } else if ((char) inByte == ' ') {
         if (firstRead != 0) push(firstRead, inValue);
         inValue = -1;
-        firstRead = 0;
-        continue; // if we have a space, then 
+        firstRead = -1;
+        continue; // if we have a space, then we can't have anything else
       } else {
         if (inValue == -1) {
           inValue = inByte - 48; // converts from ASCII to int
@@ -72,38 +84,42 @@ void loop() {
 }
 
 void fire() {
-  Serial.print("fire");
-  digitalWrite(releasePin, HIGH);
-  delay(millisForReleaseRevolution);
-  digitalWrite(releasePin, LOW);
-/*  digitalWrite(13, HIGH);
+  Serial.println("fire");
+//  digitalWrite(releasePin, HIGH);
+//  delay(millisForReleaseRevolution);
+//  digitalWrite(releasePin, LOW);
+/*  digitalWrite(ledPin, HIGH);
   delay(1000);
-  digitalWrite(13, LOW);
+  digitalWrite(ledPin, LOW);
   delay(1000);
-  digitalWrite(13, HIGH);
+  digitalWrite(ledPin, HIGH);
   delay(1000);
-  digitalWrite(13, LOW);
+  digitalWrite(ledPin, LOW);
   delay(1000);
-  digitalWrite(13, HIGH);
+  digitalWrite(ledPin, HIGH);
   delay(1000);
-  digitalWrite(13, LOW);
+  digitalWrite(ledPin, LOW);
   delay(1000);
-  digitalWrite(13, HIGH);
+  digitalWrite(ledPin, HIGH);
   delay(1000);
-  digitalWrite(13, LOW);
+  digitalWrite(ledPin, LOW);
   delay(1000);
-  digitalWrite(13, HIGH);
+  digitalWrite(ledPin, HIGH);
   delay(1000);
-  digitalWrite(13, LOW);
+  digitalWrite(ledPin, LOW);
   delay(1000);
-  digitalWrite(13, HIGH);*/
+  digitalWrite(ledPin, HIGH); */
 }
 
 void armed(boolean stat) {
-  digitalWrite(13, HIGH);
-  
-  if (!stat) {
-    digitalWrite(13, LOW);
+  if (stat) {
+    digitalWrite(ledPin, HIGH);
+    Serial.println();
+    Serial.println("armed");
+  } else {
+    digitalWrite(ledPin, LOW);
+    Serial.println();
+    Serial.println("unarmed");
   }
 }
 
