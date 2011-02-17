@@ -26,6 +26,7 @@ void setup() {
   b = new Buttons();
   i = new SettingsInterface();
   jp = new JackProofing();
+  jp.active = false;
   pushConfig();
 }
 

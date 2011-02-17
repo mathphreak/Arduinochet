@@ -1,13 +1,13 @@
 // Jack is a...friend of mine.
 
 class JackProofing {
-  boolean active = true;
-  boolean blocked = true;
+  boolean active = false;
+  boolean blocked = false;
   boolean inCorner = false;
   final int secretCode = 522577663; // cellphone numbers for "JACKPROOF"
   int readNumber = 0;
   int lastActionTime = -1;
-  final int timeoutInSeconds = 10;
+  final int timeoutInSeconds = 1000;
   boolean failed = false;
   int failTime = 0;
   
