@@ -20,6 +20,13 @@ class HingeCW {
   }
   
   void draw() {
+    if (!DRAW_WEIGHTS) {
+      int newHCWD = constrain(hingeCWDistance, Settings.getCounterweight(), Settings.getProjectileWeight());
+      if (newHCWD != hingeCWDistance) {
+        valuesDirty = valuesUsedToBeDirty;
+        hingeCWDistance = newHCWD;
+      }
+    }
     // Rectangle
     noStroke();
     fill(100);
@@ -47,6 +54,9 @@ class HingeCW {
         heldDownStart = millis();
         hingeCWDistance += 1;
         valuesDirty = true;
+        if (PUSH_ON_CHANGE) {
+          pushConfig();
+        }
       } else {
         if (millis() - heldDownStart > 5000) {
           if (frameCount % 5 == 0) {
@@ -85,6 +95,9 @@ class HingeCW {
         heldDownStart = millis();
         hingeCWDistance -= 1;
         valuesDirty = true;
+        if (PUSH_ON_CHANGE) {
+          pushConfig();
+        }
       } else {
         if (millis() - heldDownStart > 5000) {
           if (frameCount % 5 == 0) {

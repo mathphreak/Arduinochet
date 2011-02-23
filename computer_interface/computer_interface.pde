@@ -5,7 +5,11 @@ import processing.serial.*;
 boolean PUSH_ON_CHANGE = false;
 
 boolean valuesDirty = false;
+boolean valuesWereDirty = false;
+boolean valuesUsedToBeDirty = false;
 Mega mega;
+
+public static final boolean DRAW_WEIGHTS = false;
 
 HingeCW hcw;
 Heading head;
@@ -31,6 +35,8 @@ void setup() {
 }
 
 void draw() {
+  valuesUsedToBeDirty = valuesWereDirty;
+  valuesWereDirty = valuesDirty;
   background(0);
   fill(255);
   textSize(60);
