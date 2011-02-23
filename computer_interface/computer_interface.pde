@@ -68,6 +68,7 @@ void fire() {
   } else {
     mega.fire();
   }
+  pushConfig();
 }
 
 void pushConfig() {

@@ -2,7 +2,7 @@ class Mega {
   Serial port;
   int oldDistance = -1;
   int oldHeading = -1;
-  boolean armed;
+  boolean armed = true; // default to true so that we push the default false
   boolean demo;
   
   void init() {

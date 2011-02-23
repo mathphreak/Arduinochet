@@ -119,9 +119,9 @@ class Buttons {
         fill(100, 100, 255);
         text("LAUNCH", 275, 428);
       } else {
-        fire();
         launchStart = -1;
         currentArmSwitchX = 300;
+        fire();
       }
       return;
     }
