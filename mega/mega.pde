@@ -46,51 +46,12 @@ void setup() {
   lcd.begin(20, 2);
   lcdHeader();
   lcd.setCursor (20, 4);
-  delay(1000);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(50);
-  lcd.write(0);
-  delay(3000);
-  lcdHeader();
+  awesome_wait_tx();
+  awesome_unwait_tx();
 }
 
 void loop() {
+  lcd.setCursor(20, 2);
   int i;
   if (Serial.available() > 0) {
     inByte = Serial.read();
@@ -134,7 +95,7 @@ void loop() {
     vw_send(message, 2);
     awesome_unwait_tx();
     digitalWrite(13, LOW);
-    lcdHeader();
+    if (((char) inByte) == ' ') lcdHeader(); // if we sent a space, then clear the status message
   }/* else {
     lcd.setCursor(20, 2);
     lcd.print("Waiting for input");
@@ -165,6 +126,51 @@ void loop() {
 //  }
 //}
 
+void awesome_working() {
+  lcd.setCursor(20, 4);
+  lcd.print("W");
+  delay(50);
+  lcd.print("o");
+  delay(50);
+  lcd.print("r");
+  delay(50);
+  lcd.print("k");
+  delay(50);
+  lcd.print("i");
+  delay(50);
+  lcd.print("n");
+  delay(50);
+  lcd.print("g");
+  delay(50);
+}
+
+void awesome_finished() {
+  lcd.setCursor(27, 4);
+  lcd.print(" ");
+  delay(50);
+  lcd.setCursor(26, 4);
+  lcd.print(" ");
+  delay(50);
+  lcd.setCursor(25, 4);
+  lcd.print(" ");
+  delay(50);
+  lcd.setCursor(24, 4);
+  lcd.print(" ");
+  delay(50);
+  lcd.setCursor(23, 4);
+  lcd.print(" ");
+  delay(50);
+  lcd.setCursor(22, 4);
+  lcd.print(" ");
+  delay(50);
+  lcd.setCursor(21, 4);
+  lcd.print(" ");
+  delay(50);
+  lcd.setCursor(20, 4);
+  lcd.print(" ");
+  delay(50);
+}
+
 void awesome_wait_tx() {
   lcd.setCursor(20, 4);
   for (int i = 0; i < 20; i++) {
@@ -174,11 +180,50 @@ void awesome_wait_tx() {
 }
 
 void awesome_unwait_tx() {
-  for (int i = 20; i > 0; i++) {
-    lcd.setCursor(i, 4);
-    lcd.print(" ");
+  for (int i = 39; i >= 19; i--) {
+    if (i >= 20) {
+      lcd.setCursor(i, 4);
+      lcd.print('~'); // tilde which is ->
+      delay(50);
+    }
+    if (i < 39) {
+      lcd.setCursor(i+1, 4);
+      lcd.print(" ");
+      delay(50);
+    }
   }
-  lcdHeader();
+}
+
+void awesome_rewait_tx() {
+  for (int i = 19; i <= 39; i++) {
+    if (i >= 20) {
+      lcd.setCursor(i, 4);
+      lcd.print('-');
+      delay(50);
+    }
+    if (i < 39) {
+      lcd.setCursor(i+1, 4);
+      lcd.print("~"); // tilde which is ->
+      delay(50);
+    }
+    delay(50);
+  }
+}
+
+void awesome_funwait_tx() {
+  for (int i = 39; i >= 19; i--) {
+    if (i >= 20) {
+      lcd.setCursor(i, 4);
+      lcd.print('~'); // tilde which is ->
+      delay(50);
+    }
+    if (i < 39) {
+      lcd.setCursor(i+1, 4);
+      lcd.print(" ");
+      delay(50);
+    }
+    delay(50);
+  }
 }
 
 void fire() {
@@ -247,16 +292,15 @@ void armed(boolean stat) {
     lcd.setCursor(0, 2);
     lcd.print("not ready to fire");
   }
-  delay(3000);
-  lcdHeader();
 }
 
 void push(char command, int measurement) {
-/*  lcd.clear();
-  lcd.print("adjusting");
-  delay(5000);
-  lcd.clear();
-  // TODO push the measurement*/
+  lcd.print("adjusting ");
+  if (command == 'd') {
+    lcd.print("distance");
+  } else if (command == 'h') {
+    lcd.print("heading");
+  }
 }
 
 
