@@ -43,6 +43,9 @@ class Heading {
           currentTrebuchetHeading = 0;
         }
         valuesDirty = true;
+        if (PUSH_ON_CHANGE) {
+          pushConfig();
+        }
       } else {
         if (millis() - heldDownStart > 5000) {
           if (frameCount % 5 == 0) {
@@ -88,6 +91,9 @@ class Heading {
           currentTrebuchetHeading = 359;
         }
         valuesDirty = true;
+        if (PUSH_ON_CHANGE) {
+          pushConfig();
+        }
       } else {
         if (millis() - heldDownStart > 5000) {
           if (frameCount % 5 == 0) {

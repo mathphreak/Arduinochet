@@ -49,9 +49,13 @@ class SettingsInterface {
     popMatrix();
     fill(250);
     gradient(0, 75, width, maxY, currentHeight, color(250), color(200));
-    drawWeights();
+    if (DRAW_WEIGHTS) {
+      drawWeights();
+    } else {
+      drawHingeCWLimits();
+    }
     drawAltitude();
-    drawPsi();
+//    drawPsi();
     drawAlpha();
     drawV0();
     drawRangeEstimate();
@@ -170,6 +174,47 @@ class SettingsInterface {
       text("ft. above sea level", 450, 220);
       textSize(50);
       text(str(Settings.getAltitude()), 110, 220);
+    }
+  }
+  
+  void drawHingeCWLimits() {
+    // counterweight
+    noStroke();
+    fill(100);
+    rect(25, 100, 295, max(0, min(50, currentHeight-25)));
+    if (currentHeight-25 > 20) {
+      if (inCW) {
+        fill(0, 255, 200);
+      } else {
+        fill(255);
+      }
+      textSize(20);
+      text("Min. hinge-", 30, 120);
+    }
+    if (currentHeight-25 > 45) {
+      text("CW distance: ", 30, 145);
+      text("in. \u00d7 10", 250, 145);
+      textSize(50);
+      text(str(Settings.getCounterweight()), 150, 145);
+    }
+    // projectile
+    noStroke();
+    fill(100);
+    rect(345, 100, 270, max(0, min(50, currentHeight-25)));
+    if (currentHeight-25 > 20) {
+      if (inPW) {
+        fill(0, 255, 200);
+      } else {
+        fill(255);
+      }
+      textSize(20);
+      text("Max. hinge-", 350, 120);
+    }
+    if (currentHeight-25 > 45) {
+      text("CW distance: ", 350, 145);
+      text("in. \u00d7 10", 545, 145);
+      textSize(50);
+      text(str(Settings.getProjectileWeight()), 470, 145);
     }
   }
   
